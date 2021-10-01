@@ -1,20 +1,16 @@
-const http = require('http');
+const express = require('express');
+const { PORT } = require('./config');
+const { mainRouter } = require('./routers');
 
-const server = http.createServer((req, res) => {
-  if (req.url === '/') {
-    return res.end('Hello, cat!');
-  }
 
-  if (req.url === '/ping') {
-    return res.end('pong');
-  }
+const app = express();
 
-  res.statusCode = 404;
-  return res.end('Not Found');
-});
+app.use('uploads', express.static('uploads'));
 
-const PORT = 8080;
+app.use('/', mainRouter);
 
-server.listen(PORT, () => {
+app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}`);
 });
+
+

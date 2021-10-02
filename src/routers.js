@@ -5,10 +5,10 @@ const api = require('./controllers');
 
 const mainRouter = new Router();
 
-// mainRouter.get('/svgs', api.getSvgs);
-// mainRouter.get('/svgs/:id', api.getSvg);
+mainRouter.get('/list', api.getImages);
+mainRouter.get('/image/:id', api.getImageById);
 mainRouter.post('/upload', storage.single('image'), api.addImage);
+mainRouter.delete('/image/:id', api.deleteImage);
 // mainRouter.put('/svgs/:id', svgExists, api.likeSvg);
-// mainRouter.delete('/svgs/:id', api.deleteSvg);
 
 exports.mainRouter = mainRouter;

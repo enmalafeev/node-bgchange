@@ -1,4 +1,6 @@
+const path = require('path');
 const { generateId } = require('../utils/generateId');
+const { unlink, readFile } = require('fs/promises');
 
 module.exports = class Image {
   constructor(id, size, uploadedAt) {
@@ -7,9 +9,33 @@ module.exports = class Image {
     this.size = size;
     
     this.uploadedAt = uploadedAt || Date.now();
+
+    this.originalUrl = `/uploads/${this.id}.jpeg`;
   }
 
-  toPublicJSON() {
+  async removeImage(imageId) {
+    const pathToImg = path.resolve(__dirname, '../../uploads', `${imageId}.jpeg`);
+
+    await unlink(pathToImg);
+  }
+
+  async readImage(imageId) {
+    const pathToImg = path.resolve(__dirname, '../../uploads', `${imageId}.jpeg`);
+
+    await readFile(pathToImg);
+  }
+
+
+
+  toListJSON() {
+    return {
+      id: this.id,
+      size: this.size,
+      uploadedAt: this.uploadedAt
+    };
+  }
+
+  toIdJSON() {
     return {
       id: this.id,
     };

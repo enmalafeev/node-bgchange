@@ -1,13 +1,11 @@
 const addImage = require('./addImage');
-const deleteSvg = require('./deleteSvg');
-const getSvg = require('./getSvg');
-const getSvgs = require('./getSvgs');
-const likeSvg = require('./likeSvg');
+const deleteImage = require('./deleteImage');
+const getImageById = require('./getImageById');
+const getImages = require('./getImages');
 
 module.exports = {
   addImage,
-  deleteSvg,
-  getSvg,
-  getSvgs,
-  likeSvg,
+  deleteImage,
+  getImageById,
+  getImages,
 };

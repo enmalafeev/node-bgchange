@@ -2,6 +2,7 @@ const { EventEmitter } = require('events');
 const { existsSync } = require('fs');
 const { dbDumpFile } = require('../config');
 const { writeFile } = require('fs/promises');
+const Image = require('./Image');
 const { prettifyJsonToString } = require('../utils/prettifyJsonToString');
 
 class Database extends EventEmitter {
@@ -40,6 +41,11 @@ class Database extends EventEmitter {
   }
 
   async remove(imageId) {
+    const imageRaw = this.idToImage[imageId];
+    
+    const image = new Image(imageRaw.id, imageRaw.size, imageRaw.uploadedAt);
+    
+    await image.removeImage(imageId);
     delete this.idToImage[imageId];
 
     this.emit('changed');
@@ -57,6 +63,14 @@ class Database extends EventEmitter {
     const image = new Image(imageRaw.id, imageRaw.size, imageRaw.createdAt);
 
     return image;
+  }
+
+  find() {
+    let allImages = Object.values(this.idToImage);
+
+    allImages.sort((imgA, imgB) => imgB.uploadedAt - imgA.uploadedAt);
+
+    return allImages;
   }
 
   toJSON() {

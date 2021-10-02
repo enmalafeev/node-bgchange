@@ -15,7 +15,8 @@ module.exports = async (req, res, next) => {
 
     await db.insert(imageFile);
 
-    return res.json(imageFile.toPublicJSON());
+    res.status = 201;
+    return res.json(imageFile.toIdJSON());
   } catch (err) {
     return next(err);
   }

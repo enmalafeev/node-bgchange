@@ -1,11 +1,21 @@
 const db = require('../entities/Database');
+const { exists } = require('../utils/fs');
+const { NotFoundApiError } = require('../validators/errors/ApiError');
 
-module.exports = async (req, res) => {
+module.exports = async (req, res, next) => {
   const imageId = req.params.id;
+  const imageRaw = db.findOne(imageId);
 
-  //Todo сделать pipe readable stream in res
+  try {
+    const pathToFile = imageRaw.getImagePath(imageId);
+    const isFileExists = await exists(pathToFile);
 
-  res.setHeader('content-type', 'image/jpeg');
+    if (!isFileExists) {
+      throw new NotFoundApiError('Image file not found');
+    }
 
-  return res.send(db.findOne(imageId).readImage(imageId));
+    return res.download(pathToFile);
+  } catch (err) {
+    next(err);
+  }
 };

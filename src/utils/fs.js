@@ -6,6 +6,8 @@ const unlinkFileAsync = util.promisify(fs.unlink);
 const existsFileAsync = util.promisify(fs.exists);
 
 module.exports = {
+  createReadStream: fs.createReadStream,
+  
   writeFile: async (path, content) => {
     await writeFileAsync(path, content, { encoding: 'utf-8' });
   },

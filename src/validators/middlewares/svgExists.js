@@ -1,9 +1,9 @@
 const db = require('../../entities/Database');
 
 module.exports = (req, res, next) => {
-  const svgId = req.params.id;
+  const imageId = req.params.id;
 
-  if (db.findOne(svgId) === null) {
+  if (db.findOne(imageId) === null) {
     return res.sendStatus(400);
   }
 

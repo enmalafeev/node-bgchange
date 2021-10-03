@@ -1,6 +1,6 @@
 const db = require('../entities/Database');
 const Image = require('../entities/Image');
-const { BadRequestApiError } = require('../../validators/errors/ApiError');
+const { BadRequestApiError } = require('../validators/errors/ApiError');
 
 module.exports = async (req, res, next) => {
   try {

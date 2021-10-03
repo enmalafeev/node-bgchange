@@ -1,6 +1,6 @@
 const path = require('path');
 const { generateId } = require('../utils/generateId');
-const { unlink, readFile } = require('fs/promises');
+const { unlink } = require('fs/promises');
 
 module.exports = class Image {
   constructor(id, size, uploadedAt) {
@@ -19,10 +19,8 @@ module.exports = class Image {
     await unlink(pathToImg);
   }
 
-  async readImage(imageId) {
-    const pathToImg = path.resolve(__dirname, '../../uploads', `${imageId}.jpeg`);
-
-    await readFile(pathToImg);
+  getImagePath(imageId) {
+   return path.resolve(__dirname, '../../uploads', `${imageId}.jpeg`);
   }
 
 
